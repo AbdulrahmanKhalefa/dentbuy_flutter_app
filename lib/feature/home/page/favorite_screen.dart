@@ -1,5 +1,9 @@
+import 'package:dentbuy_flutter_app/core/constants/app_assets.dart';
+import 'package:dentbuy_flutter_app/feature/home/page/clinics_screen.dart';
+import 'package:dentbuy_flutter_app/feature/home/page/tools_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dentbuy_flutter_app/core/utils/app_colors.dart';
+import 'package:flutter_svg/svg.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
@@ -65,15 +69,99 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      appBar: AppBar(
+              appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Favorites',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+        elevation: 1,
+        shadowColor: Colors.black12,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 60,
+        titleSpacing: 12,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+
+            // ── Row 1: Logo + Categories ───────────────
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+
+                SvgPicture.asset(
+                  AppAssets.logoSvg,
+                  width: 36,
+                  colorFilter: ColorFilter.mode(AppColors.primary, BlendMode.srcIn),
+                ),
+
+                SizedBox(width: 40),
+
+                // Clinics
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ClinicsScreen()),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.primary.withOpacity(0.1),
+                        ),
+                        child: Icon(Icons.maps_home_work, size: 14, color: AppColors.primary),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Clinics',
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.primary),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(width: 30),
+
+                // Tools
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ToolsScreen()),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.primary.withOpacity(0.1),
+                        ),
+                        child: Icon(Icons.handyman, size: 14, color: AppColors.primary),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Tools',
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.primary),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Spacer(),
+
+                // Notification
+               
+              ],
+            ),
+
+            SizedBox(height: 6),
+
+          ],
         ),
       ),
 

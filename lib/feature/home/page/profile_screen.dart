@@ -6,11 +6,12 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF6F8FB),
 
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Profile Header
+            // ================= HEADER =================
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -20,27 +21,24 @@ class ProfileScreen extends StatelessWidget {
                   end: Alignment.bottomCenter,
                 ),
               ),
-              padding: const EdgeInsets.symmetric(vertical: 32),
+              padding: const EdgeInsets.symmetric(vertical: 40),
               child: Column(
                 children: [
-                  // Avatar
                   Container(
-                    width: 100,
-                    height: 100,
+                    width: 95,
+                    height: 95,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 3),
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withOpacity(0.15),
                     ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.person,
-                        size: 60,
-                        color: Colors.white,
-                      ),
+                    child: const Icon(
+                      Icons.person,
+                      size: 55,
+                      color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 14),
                   const Text(
                     'Mohamed Atef',
                     style: TextStyle(
@@ -57,27 +55,40 @@ class ProfileScreen extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  // Stats Row
-          
                 ],
               ),
             ),
-            const SizedBox(height: 24),
-            // Menu Items
+
+            const SizedBox(height: 20),
+
+            // ================= MENU =================
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  _buildMenuItemSimple('Personal Information', Icons.person),
-                  _buildMenuItemSimple('Settings', Icons.settings),
-                  _buildMenuItemSimple('Help & Support', Icons.help),
-                  _buildMenuItemSimple('About', Icons.info),
+                  _buildMenuCard(
+                    icon: Icons.person_outline,
+                    title: "Personal Information",
+                  ),
+                  _buildMenuCard(
+                    icon: Icons.settings_outlined,
+                    title: "Settings",
+                  ),
+                  _buildMenuCard(
+                    icon: Icons.help_outline,
+                    title: "Help & Support",
+                  ),
+                  _buildMenuCard(
+                    icon: Icons.info_outline,
+                    title: "About",
+                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
-            // Logout Button
+
+            const SizedBox(height: 30),
+
+            // ================= LOGOUT =================
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
@@ -86,14 +97,12 @@ class ProfileScreen extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFFE53935),
                     side: const BorderSide(color: Color(0xFFE53935)),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  onPressed: () {
-                    _showLogoutDialog(context);
-                  },
+                  onPressed: () => _showLogoutDialog(context),
                   child: const Text(
                     'Logout',
                     style: TextStyle(
@@ -104,77 +113,99 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+
+            const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMenuItemSimple(String title, IconData icon) {
-    return Material(
-      child: InkWell(
-        onTap: () {},
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                color: const Color(0xFF1E88E5),
-                size: 24,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.grey[400],
-                size: 18,
-              ),
-            ],
+  // ================= MENU CARD =================
+  Widget _buildMenuCard({
+    required String title,
+    required IconData icon,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 15,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 6,
+        ),
+
+        leading: Container(
+          width: 45,
+          height: 45,
+          decoration: BoxDecoration(
+            color: const Color(0xFF1E88E5).withOpacity(0.12),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            color: const Color(0xFF1E88E5),
+            size: 22,
           ),
         ),
+
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 15.5,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Colors.grey,
+        ),
+
+        onTap: () {},
       ),
     );
-
   }
 
-
+  // ================= LOGOUT DIALOG =================
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
-          title: const Text('Logout'),
-          content: const Text('Are you sure you want to logout?'),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to logout?"),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Logged out successfully'),
-                    duration: Duration(seconds: 2),
+                    content: Text("Logged out successfully"),
                   ),
                 );
               },
               child: const Text(
-                'Logout',
-                style: TextStyle(color: Color(0xFFE53935)),
+                "Logout",
+                style: TextStyle(color: Colors.red),
               ),
             ),
           ],
